@@ -28,6 +28,15 @@ This fire history data must include a fire perimeter shapefile with ignition dat
 
 
 ```{r}
+install.packages('tidyverse')
+install.packages('sf')
+install.packages('raster')
+install.packages('stars')
+install.packages('fasterize')
+install.packages('lwgeom')
+install.packages('FD')
+install.packages('colorspace')
+install.packages('knitr')
 library(tidyverse)
 library(sf)
 library(raster)
@@ -38,6 +47,7 @@ library(FD)
 library(colorspace)
 library(knitr)
 
+setwd('/users/marianne/documents/pyrodiversity')
 ## read in shapefiles
 yose <- read_sf("data/spatial/yosemite.shp")
 hucs <- read_sf("data/spatial/yose_sheds.shp")
@@ -67,7 +77,7 @@ source("code/fri_surface.R")
 source("code/season_surface.R")
 source("code/sev_surface.R")
 source("code/patch_surface.R")
-
+install.packages('tictoc')
 library(tictoc)
 
 tic()
