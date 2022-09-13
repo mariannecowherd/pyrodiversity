@@ -68,12 +68,12 @@ pyrodiv_calc <- function(
   
   ## convert to trait and abundance 
   abun <- rownames_to_column(ctab) %>% 
-    pivot_wider(names_from = rowname, id_cols = Freq, values_from = Freq) %>% 
+    pivot_wider(names_from = rowname, values_from = 'Freq') %>% 
     as.matrix()
   traits <- dplyr::select(ctab, -Freq)
   
   ## run diversity function
-  div <- dbFD(traits, abun, stand.x = T, 
+  div <- dbFD(traits,  abun[,5:ncol(abun)], stand.x = T, 
               corr = "cailliez",
               calc.FRic = frich, 
               m = pca_axes,

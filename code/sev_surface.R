@@ -5,11 +5,15 @@ sev_surface <- function(landscape, # feature(s) that represent the landscape of 
                         fires, # features representing fire severity
                         ID, #label of the unique landscape identifier
                         severity_dir, # directory where fire rasters are held
-                        fire_years = "Year", # label of the fire year column
+                        fire_years = "Fire_Year", # label of the fire year column
                         decay_rate = 0.5, # Between [0,1); a rate of .5 means each subsequent value recieves 1/2 of the previous
                         out_dir, #path to hold output rasters
-                        raster_template = "data/spatial/CBI_template.tif"
+                        raster_template = "/Users/cowherd/Documents/pyrodiversity/data/spatial/CBI_template.tif"
                      ) {
+  
+
+
+
   library(tidyverse)
   library(sf)
   library(raster)

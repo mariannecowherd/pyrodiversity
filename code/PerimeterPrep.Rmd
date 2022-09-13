@@ -16,21 +16,29 @@ This document gives an example of how to prepare fire perimeters to be used in [
 ```{r}
 library(tidyverse)
 library(sf)
+library(dplyr)
 
 ## Read in some perimeters - pre-filtered somewhat (central Sierra fires; >1984)
-pers <- read_sf("data/spatial/firep.shp") %>% 
-  mutate(Fire_Year = as.integer(YEAR_)) %>% 
+pers <- sf::read_sf("/Users/cowherd/Documents/pyrodiversity/data/caldor/caldor.shp") %>% 
+  mutate(Fire_Year = as.integer(Fire_Year)) %>% 
+  dplyr::select(FIRE_NAME, OBJECTID, Fire_Year)
+
+caldor <- sf::read_sf("/Users/cowherd/Documents/pyrodiversity/data/caldor/caldor.shp") 
+caldor['Fire_Year'] = 2021
+caldor['FIRE_NAME'] = 'CALDOR'
+pers <- caldor %>% 
+  mutate(Fire_Year = as.integer(Fire_Year)) %>% 
   dplyr::select(FIRE_NAME, OBJECTID, Fire_Year)
 
 ## Get Merced HUC10
-huc <- read_sf("data/spatial/yose_sheds.shp") %>% 
-  filter(Name == "Headwaters Merced River") %>% 
+huc <- sf::read_sf("/Users/cowherd/Documents/pyrodiversity/data/spatial/eldorado_huc8/eldoradohuc8.shp") %>% 
+  ## filter(Name == "South Fork American") %>% 
   ## match coordinate system
-  st_transform(crs = st_crs(pers)) %>% 
-  dplyr::select(Name)
+  sf::st_transform(crs = sf::st_crs(pers)) %>% 
+  dplyr::select(name)
 
 ## Limit extent to the Upper Merced
-keep <- st_intersects(pers, huc) %>% 
+keep <- sf::st_intersects(pers, huc) %>% 
   apply(1, any)
 pers1 <- pers[keep,]
 
@@ -63,7 +71,7 @@ out2 <- merge(out, dates, by = "state") %>%
 ```
 
 ```{r eval = F}
-st_write(out2, "data/spatial/gee_pers.shp", append = F)
+sf::st_write(out2, "/Users/cowherd/Documents/pyrodiversity/data/spatial/caldor_gee_pers.shp", append = F, driver ='ESRI Shapefile')
 ```
 
 If modifying for your own fire perimeters, you'll next need to upload gee_pers.shp (or whatever you name it) as an asset to your earth engine account. Follow instructures for the [Parks CBI model](https://tinyurl.com/CBImodel). You will likely need to modify path to Asset file (line ~30), and path for outputs (line ~375). Also, GEE doesn't seem to understand subdirectories in Google Drive (or I can't figure them out), rather it looks for a unique base directory. E.g. you just need to point to "dir", regardless of whether it's in "My Drive/dir" or "My Drive/one/two/three/dir". I'm not sure how it deals with duplicate directory names.  

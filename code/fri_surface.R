@@ -9,7 +9,7 @@ fri_surface <- function(landscape, # feature(s) that represent the landscape of 
                         end_year, # Year after end of dataset (for MTBS: 2018)
                         decay_rate = 0.5, # Importance decay rate of the "invisible mosaic", between [0,1)
                         out_dir, #path to hold output rasters
-                        raster_template = "data/spatial/CBI_template.tif"
+                        raster_template = "/Users/cowherd/Documents/pyrodiversity/data/spatial/CBI_template.tif"
   ) {
   library(tidyverse)
   library(sf)

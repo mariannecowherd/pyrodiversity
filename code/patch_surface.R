@@ -10,7 +10,7 @@ patch_surface <- function(landscape, # feature(s) that represent the landscape o
                           buffer_landscape = 0, # Extension of landscape (in meters) if needed for point calculations near edges
                           ## Buffer could also be used to reduce edge effects on patch area calculations
                           out_dir, #path to hold output rasters
-                          raster_template = "data/spatial/CBI_template.tif"
+                          raster_template = "/Users/cowherd/Documents/pyrodiversity/data/spatial/CBI_template.tif"
                      ) {
   library(raster)
   library(stars)
@@ -73,8 +73,9 @@ patch_surface <- function(landscape, # feature(s) that represent the landscape o
         fire <- fires[i,]
         id <- as.character(fire$Fire_ID)
         year <- pull(fire, {{fire_years}})
-        path <- fire_files[[i]]
-        
+        #path <- fire_files[[i]]
+        path <- "/Users/cowherd/Documents/pyrodiversity/data/spatial/caldor_sev/13149-dnbr.tiff"
+
         ## Get cbi raster
         r <- raster(path, layer = 1)
         names(r) <- as.character(year)

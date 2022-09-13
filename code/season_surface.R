@@ -4,11 +4,11 @@
 season_surface <- function(landscape, # feature(s) that represent the landscape of interest
                            fires, # features representing fire severity
                            ID, #label of the unique landscape identifier
-                           fire_years = "Year", # label of the fire year column
-                           fire_day = "jday", # label of the fire ignition Julian date column
+                           fire_years = "Fire_Year", # label of the fire year column
+                           fire_day = "Start_Day", # label of the fire ignition Julian date column
                            decay_rate = 0.5, # Between [0,1); a rate of .5 means each subsequent value recieves 1/2 of the previous
                            out_dir, #path to hold output rasters
-                           raster_template = "data/spatial/CBI_template.tif"
+                           raster_template = "/Users/cowherd/Documents/pyrodiversity/data/spatial/CBI_template.tif"
                         ) 
   {
   library(tidyverse)
